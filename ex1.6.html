@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бронювання квитків на поїзд</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        #tickets-list {
+            margin-top: 20px;
+        }
+
+        #train-layout {
+            margin-top: 40px;
+        }
+
+        .train-carriage {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            margin-right: 5px;
+            text-align: center;
+            line-height: 30px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .seat.booked {
+            background-color: #ff8080;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Бронювання квитків на поїзд</h2>
+    <div class="form-group">
+        <label for="direction">Оберіть напрямок поїзда:</label>
+        <select id="direction">
+            <option value="Київ-Львів">Київ-Львів</option>
+            <option value="Харків-Одеса">Харків-Одеса</option>
+            <!-- Додайте інші напрямки сюди -->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="date">Оберіть дату поїздки:</label>
+        <input type="date" id="date">
+    </div>
+    <div class="form-group">
+        <label for="seats">Оберіть місця для броні (розділіть номери комою):</label>
+        <input type="text" id="seats">
+    </div>
+    <button class="btn" onclick="bookTicket()">Забронювати квиток</button>
+    <h3>Заброньовані квитки:</h3>
+    <ul id="tickets-list"></ul>
+
+    <h3>Умовний вагон:</h3>
+    <div id="train-layout"></div>
+</div>
+
+<script>
+    const bookedTickets = [];
+    const totalSeats = 20;
+
+    function initializeTrainLayout() {
+        const trainLayout = document.getElementById('train-layout');
+        for (let i = 1; i <= totalSeats; i++) {
+            const seat = document.createElement('div');
+            seat.classList.add('seat');
+            seat.textContent = i;
+            seat.addEventListener('click', () => selectSeat(i));
+            trainLayout.appendChild(seat);
+        }
+    }
+
+    function selectSeat(seatNumber) {
+        const seatsInput = document.getElementById('seats');
+        if (seatsInput.value === '') {
+            seatsInput.value = seatNumber;
+        } else {
+            seatsInput.value += ',' + seatNumber;
+        }
+    }
+
+    function bookTicket() {
+        const direction = document.getElementById('direction').value;
+        const date = document.getElementById('date').value;
+        const seats = document.getElementById('seats').value.split(',');
+
+        bookedTickets.push({ direction, date, seats });
+
+        updateTicketsList();
+    }
+
+    function updateTicketsList() {
+        const ticketsList = document.getElementById('tickets-list');
+        ticketsList.innerHTML = '';
+        bookedTickets.forEach(ticket => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Напрямок: ${ticket.direction}, Дата: ${ticket.date}, Місця: ${ticket.seats.join(', ')}`;
+            ticketsList.appendChild(listItem);
+        });
+
+        // Оновлення відображення умовного вагону
+        const seats = document.querySelectorAll('.seat');
+        seats.forEach(seat => seat.classList.remove('booked'));
+        bookedTickets.forEach(ticket => {
+            ticket.seats.forEach(bookedSeat => {
+                const seatNumber = parseInt(bookedSeat);
+                seats[seatNumber - 1].classList.add('booked');
+            });
+        });
+    }
+
+    // Ініціалізація вагону після завантаження сторінки
+    window.addEventListener('load', initializeTrainLayout);
+</script>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин книг</title>
+    <style>
+        .book {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .book img {
+            max-width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Ласкаво просимо до магазину книг</h1>
+
+<!-- Книги як окремі блоки -->
+<div class="book">
+    <img src="./img/book1.jpg" alt="Книга 1">
+    <h2>Атомні звички</h2>
+    <p>Ціна: $20</p>
+</div>
+
+<div class="book">
+    <img src="./img/book2.jpeg" alt="Книга 2">
+    <h2>Java</h2>
+    <p>Ціна: $25</p>
+</div>
+
+<div class="book">
+    <img src="./img/book3.jpg" alt="Книга 3">
+    <h2>Python</h2>
+    <p>Ціна: $18</p>
+</div>
+
+<!-- Форма для введення даних користувача -->
+<form id="order-form">
+    <label for="selected-book">Оберіть книгу:</label>
+    <select id="selected-book" required>
+        <option value="Atomic_habits">Атомні звички</option>
+        <option value="Java">Java</option>
+        <option value="Python">Python</option>
+    </select><br>
+
+    <label for="quantity">Кількість екземплярів:</label>
+    <input type="number" id="quantity" required><br>
+
+    <label for="name">Ім'я:</label>
+    <input type="text" id="name" required><br>
+
+    <label for="date">Дата доставки:</label>
+    <input type="date" id="date" required><br>
+
+    <label for="address">Адреса доставки:</label>
+    <input type="text" id="address" required><br>
+
+    <label for="comment">Коментар:</label><br>
+    <textarea id="comment"></textarea><br>
+
+    <button type="submit">Замовити</button>
+</form>
+
+<div id="confirmation"></div>
+
+<script>
+    // Отримуємо доступ до елементів DOM
+    const orderForm = document.getElementById('order-form');
+    const confirmationDiv = document.getElementById('confirmation');
+
+    // Обробник події для форми
+    orderForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Зупиняємо стандартну подію відправки форми
+
+        // Отримуємо значення з полів вводу
+        const selectedBook = document.getElementById('selected-book').value;
+        const quantity = document.getElementById('quantity').value;
+        const name = document.getElementById('name').value;
+        const date = document.getElementById('date').value;
+        const address = document.getElementById('address').value;
+        const comment = document.getElementById('comment').value;
+
+        // Виводимо підтвердження замовлення на екран
+        const confirmationMessage = `${name}, дякуємо за замовлення. ${quantity} екземплярів книги "${selectedBook}" буде доставлено у ${date} за адресою: ${address}. Коментар: ${comment}`;
+        confirmationDiv.textContent = confirmationMessage;
+    });
+</script>
+</body>
+
+</html>

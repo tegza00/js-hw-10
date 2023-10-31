@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест</title>
+</head>
+
+<body>
+<h1>Тест</h1>
+
+<!-- Питання 1 -->
+<h3>Питання 1: Яка столиця Франції?</h3>
+<input type="radio" name="question1" value="1"> Париж<br>
+<input type="radio" name="question1" value="0"> Берлін<br>
+
+<!-- Питання 2 -->
+<h3>Питання 2: Яка найвища гора у світі?</h3>
+<input type="radio" name="question2" value="0"> Еверест<br>
+<input type="radio" name="question2" value="1"> Кіліманджаро<br>
+
+<!-- Кнопка для перевірки відповідей -->
+<button onclick="checkAnswers()">Перевірити відповіді</button>
+
+<!-- Виведення кількості правильних відповідей -->
+<p id="result"></p>
+
+<script>
+    function checkAnswers() {
+        // Отримуємо значення відповідей
+        var answer1 = document.querySelector('input[name="question1"]:checked').value;
+        var answer2 = document.querySelector('input[name="question2"]:checked').value;
+
+        // Рахуємо кількість правильних відповідей
+        var score = parseInt(answer1) + parseInt(answer2);
+
+        // Виводимо результат
+        var resultElement = document.getElementById('result');
+        resultElement.textContent = 'Кількість правильних відповідей: ' + score;
+    }
+</script>
+</body>
+
+</html>

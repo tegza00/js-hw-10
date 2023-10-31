@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум</title>
+</head>
+
+<body>
+<h1>Форум</h1>
+
+<!-- Список повідомлень -->
+<ul id="message-list">
+    <!-- Повідомлення будуть відображатися тут -->
+</ul>
+
+<!-- Форма для додавання нового повідомлення -->
+<form id="message-form">
+    <label for="username">Ім'я:</label>
+    <input type="text" id="username" required><br>
+    <label for="message">Повідомлення:</label><br>
+    <textarea id="message" required></textarea><br>
+    <button type="submit">Надіслати</button>
+</form>
+
+<script>
+    // Отримуємо доступ до елементів DOM
+    const messageList = document.getElementById('message-list');
+    const messageForm = document.getElementById('message-form');
+    const usernameInput = document.getElementById('username');
+    const messageInput = document.getElementById('message');
+
+    // Обробник події для форми
+    messageForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Зупиняємо стандартну подію відправки форми
+
+        // Отримуємо значення з полів вводу
+        const username = usernameInput.value;
+        const message = messageInput.value;
+
+        // Створюємо новий елемент списку
+        const listItem = document.createElement('li');
+        listItem.textContent = `${username}: ${message}`;
+
+        // Додаємо нове повідомлення до списку
+        messageList.appendChild(listItem);
+
+        // Очищаємо поля вводу
+        usernameInput.value = '';
+        messageInput.value = '';
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Відмітити присутніх</title>
+</head>
+
+<body>
+<h1>Відмітити присутніх на парі</h1>
+
+<!-- Форма для відмітки присутніх -->
+<form id="attendance-form">
+    <label for="group">Група:</label>
+    <select id="group" required>
+        <option value="group1">Група 1</option>
+        <option value="group2">Група 2</option>
+    </select><br>
+
+    <label for="lecture">Пара:</label>
+    <input type="number" id="lecture" required><br>
+
+    <label for="topic">Тема заняття:</label>
+    <input type="text" id="topic" required><br>
+
+    <label for="present">Присутні:</label>
+    <select id="present" multiple required>
+        <option value="student1">Студент 1</option>
+        <option value="student2">Студент 2</option>
+        <option value="student3">Студент 3</option>
+        <!-- Додайте інші варіанти за потреби -->
+    </select><br>
+
+    <button type="submit">Відмітити присутніх</button>
+</form>
+
+<h2>Вже відмічені пари:</h2>
+<ul id="attendance-list"></ul>
+
+<script>
+    // Заздалегідь підготовлені масиви для зберігання інформації про присутніх
+    const attendanceData = [];
+
+    // Отримуємо доступ до елементів DOM
+    const attendanceForm = document.getElementById('attendance-form');
+    const attendanceList = document.getElementById('attendance-list');
+
+    // Обробник події для форми
+    attendanceForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Зупиняємо стандартну подію відправки форми
+
+        // Отримуємо значення з полів вводу та вибраних елементів списку
+        const group = document.getElementById('group').value;
+        const lecture = document.getElementById('lecture').value;
+        const topic = document.getElementById('topic').value;
+        const presentSelect = document.getElementById('present');
+        const selectedOptions = Array.from(presentSelect.selectedOptions).map(option => option.value);
+
+        // Зберігаємо інформацію про присутніх у масиві
+        attendanceData.push({ group, lecture, topic, present: selectedOptions });
+
+        // Виводимо вже відмічені пари на екрані
+        const listItem = document.createElement('li');
+        listItem.textContent = `Група: ${group}, Пара: ${lecture}, Тема: ${topic}, Присутні: ${selectedOptions.join(', ')}`;
+        attendanceList.appendChild(listItem);
+
+        // Очищаємо поля вводу
+        document.getElementById('group').value = '';
+        document.getElementById('lecture').value = '';
+        document.getElementById('topic').value = '';
+        presentSelect.selectedIndex = -1; // Знімаємо вибір зі списку
+    });
+</script>
+</body>
+
+</html>

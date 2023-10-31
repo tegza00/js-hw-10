@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стилізований текст</title>
+</head>
+
+<body>
+<h1>Введіть текст для стилізації:</h1>
+
+<!-- Форма для введення тексту та вибору стилів -->
+<form id="text-form">
+    <label for="text">Текст:</label>
+    <input type="text" id="text" required><br>
+
+    <label for="style">Стиль:</label>
+    <select id="style">
+        <option value="default">За замовчуванням</option>
+        <option value="bold">Bold</option>
+        <option value="underline">Underline</option>
+        <option value="italic">Italic</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+    </select><br>
+
+    <button type="submit">Стилізувати</button>
+</form>
+
+<!-- Виведення стилізованого тексту -->
+<div id="styled-text"></div>
+
+<script>
+    // Отримуємо доступ до елементів DOM
+    const textForm = document.getElementById('text-form');
+    const textInput = document.getElementById('text');
+    const styleSelect = document.getElementById('style');
+    const styledText = document.getElementById('styled-text');
+
+    // Обробник події для форми
+    textForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Зупиняємо стандартну подію відправки форми
+
+        // Отримуємо введений текст та вибраний стиль
+        const inputText = textInput.value;
+        const selectedStyle = styleSelect.value;
+
+        // Встановлюємо стилі для тексту
+        styledText.textContent = inputText;
+        styledText.style.fontWeight = selectedStyle === 'bold' ? 'bold' : 'normal';
+        styledText.style.textDecoration = selectedStyle === 'underline' ? 'underline' : 'none';
+        styledText.style.fontStyle = selectedStyle === 'italic' ? 'italic' : 'normal';
+        styledText.style.textAlign = selectedStyle === 'left' ? 'left' :
+            selectedStyle === 'right' ? 'right';
+    });
+</script>
+</body>
+
+</html>
